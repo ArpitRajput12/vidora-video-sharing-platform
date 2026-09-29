@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
   Search,
   Upload,
@@ -14,14 +14,37 @@ import { useAuth } from '../../context/AuthContext.jsx';
 export const TopNavbar = ({ onOpenUpload, onOpenNewTweet, onToggleMobileMenu }) => {
   const { user } = useAuth();
   const navigate = useNavigate();
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchParams] = useSearchParams();
+
+  const currentQuery =
+    searchParams.get('query') ||
+    searchParams.get('search') ||
+    searchParams.get('q') ||
+    '';
+
+  const [searchQuery, setSearchQuery] = useState(currentQuery);
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
+
+  // Sync input value whenever URL search parameters change
+  useEffect(() => {
+    setSearchQuery(currentQuery);
+  }, [currentQuery]);
 
   const handleSearch = (e) => {
     e.preventDefault();
-    if (searchQuery.trim()) {
-      navigate(`/my-videos?search=${encodeURIComponent(searchQuery.trim())}`);
-      setMobileSearchOpen(false);
+    const trimmed = searchQuery.trim();
+    if (trimmed) {
+      navigate(`/?query=${encodeURIComponent(trimmed)}`);
+    } else {
+      navigate('/');
+    }
+    setMobileSearchOpen(false);
+  };
+
+  const handleClear = () => {
+    setSearchQuery('');
+    if (currentQuery) {
+      navigate('/');
     }
   };
 
@@ -37,13 +60,13 @@ export const TopNavbar = ({ onOpenUpload, onOpenNewTweet, onToggleMobileMenu }) 
               autoFocus
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search videos, playlists, or analytics..."
+              placeholder="Search videos by title or topic..."
               className="w-full bg-[#162033] border border-[#1E293B] text-slate-100 placeholder-slate-400 text-xs rounded-xl pl-9 pr-8 py-2 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30"
             />
             {searchQuery && (
               <button
                 type="button"
-                onClick={() => setSearchQuery('')}
+                onClick={handleClear}
                 className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200"
               >
                 <X className="w-3.5 h-3.5" />
@@ -93,13 +116,13 @@ export const TopNavbar = ({ onOpenUpload, onOpenNewTweet, onToggleMobileMenu }) 
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search videos, playlists, or analytics..."
+              placeholder="Search videos by title or topic..."
               className="w-full bg-[#162033] border border-[#1E293B] text-slate-100 placeholder-slate-400 text-xs rounded-xl pl-10 pr-9 py-2 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30 transition-all"
             />
             {searchQuery && (
               <button
                 type="button"
-                onClick={() => setSearchQuery('')}
+                onClick={handleClear}
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200"
               >
                 <X className="w-3.5 h-3.5" />

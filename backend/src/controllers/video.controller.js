@@ -12,13 +12,14 @@ const getAllVideos = asyncHandler(async (req, res) => {
 
     const pipeline = []
 
-    // text search on title/description
-    if (query) {
+    // text search on title/description with regex
+    if (query && query.trim() !== "") {
+        const cleanQuery = query.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
         pipeline.push({
             $match: {
                 $or: [
-                    { title: { $regex: query, $options: "i" } },
-                    { description: { $regex: query, $options: "i" } }
+                    { title: { $regex: cleanQuery, $options: "i" } },
+                    { description: { $regex: cleanQuery, $options: "i" } }
                 ]
             }
         })
@@ -36,13 +37,17 @@ const getAllVideos = asyncHandler(async (req, res) => {
         })
     }
 
-    // only published videos for public listing
-    pipeline.push({
-        $match: { isPublished: true }
-    })
+    // Ensure only published videos are returned for public searches.
+    // If a creator is querying their own videos by userId, do not filter out drafts.
+    const isOwnerQuery = req.user?._id && userId && req.user._id.toString() === userId.toString();
+    if (!isOwnerQuery) {
+        pipeline.push({
+            $match: { isPublished: true }
+        })
+    }
 
     // sorting
-    if (sortBy && sortType) {
+    if (sortBy) {
         pipeline.push({
             $sort: {
                 [sortBy]: sortType === "asc" ? 1 : -1

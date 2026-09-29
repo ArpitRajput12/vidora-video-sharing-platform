@@ -8,7 +8,11 @@ import { EmptyState, ErrorState } from '../components/common/EmptyState.jsx';
 
 export const HomePage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const searchQuery = searchParams.get('search') || '';
+  const searchQuery =
+    searchParams.get('query') ||
+    searchParams.get('search') ||
+    searchParams.get('q') ||
+    '';
 
   const [activeTab, setActiveTab] = useState('all');
   const [videos, setVideos] = useState([]);
@@ -39,8 +43,8 @@ export const HomePage = () => {
           limit: 12,
         };
 
-        if (searchQuery) {
-          params.query = searchQuery;
+        if (searchQuery.trim()) {
+          params.query = searchQuery.trim();
         }
 
         if (currentTabConfig?.sortBy) {
@@ -51,7 +55,7 @@ export const HomePage = () => {
         const res = await videoApi.getAllVideos(params);
         const data = res?.data;
 
-        const docs = data?.docs || [];
+        const docs = Array.isArray(data) ? data : data?.docs || [];
         setVideos((prev) => (append ? [...prev, ...docs] : docs));
         setHasMore(data?.hasNextPage || false);
         setPage(targetPage);
@@ -136,10 +140,10 @@ export const HomePage = () => {
       ) : videos.length === 0 ? (
         <EmptyState
           icon={Film}
-          title={searchQuery ? 'No matching videos found' : 'No videos published yet'}
+          title={searchQuery ? `No videos found for "${searchQuery}"` : 'No videos published yet'}
           description={
             searchQuery
-              ? `We couldn't find anything matching "${searchQuery}". Try different keywords.`
+              ? `We couldn't find any videos matching "${searchQuery}". Try different keywords or check spelling.`
               : 'Be the first creator to upload a video to Vidora!'
           }
           actionLabel={searchQuery ? 'Clear Search' : 'Upload Video'}
