@@ -7,6 +7,7 @@ const app = express()
 const allowedOrigins = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
+    "https://vidora-video-sharing-platform-eight.vercel.app",
     process.env.CORS_ORIGIN
 ].filter(Boolean);
 
@@ -17,6 +18,7 @@ app.use(cors({
 
         if (
             allowedOrigins.includes(origin) ||
+            origin.endsWith(".vercel.app") ||
             origin.startsWith("http://localhost:") ||
             origin.startsWith("http://127.0.0.1:")
         ) {

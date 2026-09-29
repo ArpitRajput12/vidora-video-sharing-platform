@@ -1,8 +1,13 @@
 import axios from 'axios';
 
+// Centralized API Base URL with production fallback
+const API_BASE_URL =
+  import.meta.env.VITE_API_URL ||
+  'https://vidora-video-sharing-platform.onrender.com/api/v1';
+
 // Centralized Axios Client
 const client = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: API_BASE_URL,
   withCredentials: true, // Important for HTTP-only cookies
   headers: {
     'Content-Type': 'application/json',
@@ -97,7 +102,7 @@ client.interceptors.response.use(
         // Use VITE_API_URL so production requests go to Render,
         // not to the Vercel frontend.
         const refreshResponse = await axios.post(
-          `${import.meta.env.VITE_API_URL}/users/refresh-token`,
+          `${API_BASE_URL}/users/refresh-token`,
           {
             refreshToken: storedRefreshToken || undefined,
           },
