@@ -2,8 +2,8 @@ import axios from 'axios';
 
 // Centralized Axios Client
 const client = axios.create({
-  baseURL: '/api/v1',
-  withCredentials: true, // Crucial for sending & receiving HTTP-only cookies
+  baseURL: import.meta.env.VITE_API_URL,
+  withCredentials: true, // Important for HTTP-only cookies
   headers: {
     'Content-Type': 'application/json',
   },
@@ -20,44 +20,59 @@ const processQueue = (error, token = null) => {
       prom.resolve(token);
     }
   });
+
   failedQueue = [];
 };
 
-// Request Interceptor: Attach bearer token if available in storage (dual auth support)
+// Request Interceptor
+// Attach access token if available in localStorage
 client.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('vidora_access_token');
+
     if (token && !config.headers.Authorization) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+
     return config;
   },
   (error) => Promise.reject(error)
 );
 
-// Response Interceptor: Auto token refresh on 401 Unauthorized
+// Response Interceptor
+// Automatically refresh access token when API returns 401
 client.interceptors.response.use(
   (response) => {
-    return response.data; // Return the backend ApiResponse envelope { statusCode, data, message, success }
+    // Backend ApiResponse envelope:
+    // { statusCode, data, message, success }
+    return response.data;
   },
+
   async (error) => {
     const originalRequest = error.config;
 
+    // Network error / no response
     if (!error.response) {
       return Promise.reject(error);
     }
 
     const { status } = error.response;
 
-    // Do not attempt token refresh for login, register, or refresh-token calls
+    // Do not refresh token for authentication routes
     const isAuthRoute =
-      originalRequest.url.includes('/users/login') ||
-      originalRequest.url.includes('/users/register') ||
-      originalRequest.url.includes('/users/refresh-token');
+      originalRequest.url?.includes('/users/login') ||
+      originalRequest.url?.includes('/users/register') ||
+      originalRequest.url?.includes('/users/refresh-token');
 
-    if (status === 401 && !originalRequest._retry && !isAuthRoute) {
+    // Handle 401 Unauthorized
+    if (
+      status === 401 &&
+      !originalRequest._retry &&
+      !isAuthRoute
+    ) {
+      // If another request is already refreshing token,
+      // wait for that request to finish.
       if (isRefreshing) {
-        // Queue pending requests while token is refreshing
         return new Promise((resolve, reject) => {
           failedQueue.push({ resolve, reject });
         })
@@ -65,6 +80,7 @@ client.interceptors.response.use(
             if (token) {
               originalRequest.headers.Authorization = `Bearer ${token}`;
             }
+
             return client(originalRequest);
           })
           .catch((err) => Promise.reject(err));
@@ -74,44 +90,74 @@ client.interceptors.response.use(
       isRefreshing = true;
 
       try {
-        const storedRefreshToken = localStorage.getItem('vidora_refresh_token');
+        const storedRefreshToken =
+          localStorage.getItem('vidora_refresh_token');
 
-        // Post to refresh token endpoint with cookie or payload
+        // IMPORTANT:
+        // Use VITE_API_URL so production requests go to Render,
+        // not to the Vercel frontend.
         const refreshResponse = await axios.post(
-          '/api/v1/users/refresh-token',
-          { refreshToken: storedRefreshToken || undefined },
-          { withCredentials: true }
+          `${import.meta.env.VITE_API_URL}/users/refresh-token`,
+          {
+            refreshToken: storedRefreshToken || undefined,
+          },
+          {
+            withCredentials: true,
+          }
         );
 
         const newAccessToken =
           refreshResponse.data?.data?.accessToken;
+
         const newRefreshToken =
           refreshResponse.data?.data?.refreshToken;
 
         if (newAccessToken) {
-          localStorage.setItem('vidora_access_token', newAccessToken);
+          localStorage.setItem(
+            'vidora_access_token',
+            newAccessToken
+          );
+
           if (newRefreshToken) {
-            localStorage.setItem('vidora_refresh_token', newRefreshToken);
+            localStorage.setItem(
+              'vidora_refresh_token',
+              newRefreshToken
+            );
           }
 
-          client.defaults.headers.common.Authorization = `Bearer ${newAccessToken}`;
-          originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+          // Update default Authorization header
+          client.defaults.headers.common.Authorization =
+            `Bearer ${newAccessToken}`;
 
+          // Update original failed request
+          originalRequest.headers.Authorization =
+            `Bearer ${newAccessToken}`;
+
+          // Resolve queued requests
           processQueue(null, newAccessToken);
+
+          // Retry original request
           return client(originalRequest);
-        } else {
-          throw new Error('No access token returned from refresh');
         }
+
+        throw new Error(
+          'No access token returned from refresh'
+        );
       } catch (refreshError) {
         processQueue(refreshError, null);
+
         localStorage.removeItem('vidora_access_token');
         localStorage.removeItem('vidora_refresh_token');
         localStorage.removeItem('vidora_user');
 
-        // Redirect to login if unauthenticated
-        if (typeof window !== 'undefined' && !window.location.pathname.startsWith('/login')) {
+        // Redirect to login
+        if (
+          typeof window !== 'undefined' &&
+          !window.location.pathname.startsWith('/login')
+        ) {
           window.location.href = '/login';
         }
+
         return Promise.reject(refreshError);
       } finally {
         isRefreshing = false;
