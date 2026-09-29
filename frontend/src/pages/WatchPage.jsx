@@ -265,34 +265,36 @@ export const WatchPage = () => {
         </h1>
 
         {/* Creator Channel Bar & Actions Bar */}
-        <div className="flex flex-wrap items-center justify-between gap-4 py-2 border-b border-[#1E293B]">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 py-2 border-b border-[#1E293B]">
           {/* Channel Info & Subscribe Button */}
-          <div className="flex items-center gap-3.5">
-            <Link to={`/c/${video.owner?.username}`}>
-              <img
-                src={video.owner?.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80'}
-                alt={video.owner?.fullName || 'Creator'}
-                className="w-11 h-11 rounded-full object-cover ring-2 ring-blue-500/20 hover:ring-blue-500/60 transition-all"
-              />
-            </Link>
-
-            <div className="flex flex-col">
-              <Link
-                to={`/c/${video.owner?.username}`}
-                className="text-sm font-bold text-white hover:text-blue-400 transition-colors"
-              >
-                {video.owner?.fullName || video.owner?.username}
+          <div className="flex items-center justify-between sm:justify-start gap-3 w-full sm:w-auto">
+            <div className="flex items-center gap-3">
+              <Link to={`/c/${video.owner?.username}`}>
+                <img
+                  src={video.owner?.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80'}
+                  alt={video.owner?.fullName || 'Creator'}
+                  className="w-10 h-10 sm:w-11 sm:h-11 rounded-full object-cover ring-2 ring-blue-500/20 hover:ring-blue-500/60 transition-all shrink-0"
+                />
               </Link>
-              <span className="text-xs text-slate-400">
-                {subscribersCount} {subscribersCount === 1 ? 'subscriber' : 'subscribers'}
-              </span>
+
+              <div className="flex flex-col min-w-0">
+                <Link
+                  to={`/c/${video.owner?.username}`}
+                  className="text-sm font-bold text-white hover:text-blue-400 transition-colors truncate"
+                >
+                  {video.owner?.fullName || video.owner?.username}
+                </Link>
+                <span className="text-xs text-slate-400">
+                  {subscribersCount} {subscribersCount === 1 ? 'subscriber' : 'subscribers'}
+                </span>
+              </div>
             </div>
 
             {!isOwner && (
               <button
                 onClick={handleToggleSubscribe}
                 disabled={subscribing}
-                className={`ml-3 px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-150 flex items-center gap-1.5 ${
+                className={`ml-auto sm:ml-3 px-3.5 sm:px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-150 flex items-center gap-1.5 shrink-0 ${
                   isSubscribed
                     ? 'bg-[#162033] hover:bg-[#1E293B] text-slate-300 border border-[#1E293B]'
                     : 'bg-white hover:bg-slate-200 text-slate-900 shadow-md'
@@ -313,9 +315,9 @@ export const WatchPage = () => {
           </div>
 
           {/* Action CTAs (Like/Dislike, Share, Save) */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0">
             {/* Segmented Like & Dislike Pill */}
-            <div className="flex items-center rounded-xl bg-[#162033] border border-[#1E293B] p-0.5">
+            <div className="flex items-center rounded-xl bg-[#162033] border border-[#1E293B] p-0.5 shrink-0">
               <button
                 onClick={handleToggleLike}
                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${
@@ -346,7 +348,7 @@ export const WatchPage = () => {
             {/* Share Button */}
             <button
               onClick={handleShare}
-              className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold bg-[#162033] hover:bg-[#1E293B] text-slate-300 hover:text-white border border-[#1E293B] transition-all"
+              className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold bg-[#162033] hover:bg-[#1E293B] text-slate-300 hover:text-white border border-[#1E293B] transition-all shrink-0"
             >
               {copied ? (
                 <>
@@ -364,7 +366,7 @@ export const WatchPage = () => {
             {/* Save to Playlist */}
             <button
               onClick={() => setShowSaveModal(true)}
-              className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold bg-[#162033] hover:bg-[#1E293B] text-slate-300 hover:text-white border border-[#1E293B] transition-all"
+              className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold bg-[#162033] hover:bg-[#1E293B] text-slate-300 hover:text-white border border-[#1E293B] transition-all shrink-0"
             >
               <BookmarkPlus className="w-3.5 h-3.5 text-indigo-400" />
               <span>Save</span>

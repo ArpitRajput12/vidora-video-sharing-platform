@@ -111,7 +111,7 @@ export const ChannelPage = () => {
       {/* Channel Banner & Header */}
       <div className="bg-[#111827] border border-[#1E293B] rounded-2xl overflow-hidden shadow-xl">
         {/* Cover Banner */}
-        <div className="h-36 w-full bg-gradient-to-r from-blue-900/40 via-indigo-900/30 to-purple-900/40 overflow-hidden relative">
+        <div className="h-28 sm:h-36 w-full bg-gradient-to-r from-blue-900/40 via-indigo-900/30 to-purple-900/40 overflow-hidden relative">
           {channel.coverImage && (
             <img
               src={channel.coverImage}
@@ -122,16 +122,16 @@ export const ChannelPage = () => {
         </div>
 
         {/* Profile Info Row */}
-        <div className="px-6 pb-6 pt-0 flex flex-col md:flex-row items-start md:items-end justify-between gap-4 -mt-12">
-          <div className="flex items-end gap-4">
+        <div className="px-4 sm:px-6 pb-5 sm:pb-6 pt-0 flex flex-col md:flex-row items-start md:items-end justify-between gap-4 -mt-10 sm:-mt-12">
+          <div className="flex items-end gap-3 sm:gap-4">
             <img
               src={channel.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80'}
               alt={channel.fullName}
-              className="w-24 h-24 rounded-2xl object-cover ring-4 ring-[#111827] shadow-xl shrink-0"
+              className="w-20 h-20 sm:w-24 sm:h-24 rounded-xl sm:rounded-2xl object-cover ring-4 ring-[#111827] shadow-xl shrink-0"
             />
             <div className="mb-1">
-              <div className="flex items-center gap-2">
-                <h1 className="text-xl font-bold text-white">{channel.fullName}</h1>
+              <div className="flex items-center gap-2 flex-wrap">
+                <h1 className="text-lg sm:text-xl font-bold text-white">{channel.fullName}</h1>
                 <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-blue-500/10 text-blue-400 border border-blue-500/20">
                   Creator
                 </span>
@@ -147,7 +147,7 @@ export const ChannelPage = () => {
             <button
               onClick={handleToggleSub}
               disabled={subscribing}
-              className={`mb-1 px-5 py-2.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all ${
+              className={`mb-1 w-full sm:w-auto px-5 py-2.5 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition-all ${
                 isSubscribed
                   ? 'bg-[#162033] hover:bg-[#1E293B] text-slate-300 border border-[#1E293B]'
                   : 'bg-white hover:bg-slate-200 text-slate-900 shadow-md'
@@ -168,7 +168,7 @@ export const ChannelPage = () => {
         </div>
 
         {/* Tab Switcher */}
-        <div className="px-6 flex gap-6 border-t border-[#1E293B] text-xs font-bold">
+        <div className="px-4 sm:px-6 flex gap-6 border-t border-[#1E293B] text-xs font-bold">
           <button
             onClick={() => setActiveTab('videos')}
             className={`py-3 flex items-center gap-2 border-b-2 transition-all ${

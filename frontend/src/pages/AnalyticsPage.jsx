@@ -75,7 +75,7 @@ export const AnalyticsPage = () => {
         </div>
 
         {/* Timeframe Chips */}
-        <div className="flex items-center gap-1 p-1 rounded-xl bg-[#111827] border border-[#1E293B]">
+        <div className="flex items-center gap-1 p-1 rounded-xl bg-[#111827] border border-[#1E293B] overflow-x-auto max-w-full">
           {[
             { id: '7d', label: 'Last 7 days' },
             { id: '28d', label: 'Last 28 days' },
@@ -85,7 +85,7 @@ export const AnalyticsPage = () => {
             <button
               key={t.id}
               onClick={() => setTimeframe(t.id)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${
                 timeframe === t.id
                   ? 'bg-blue-600 text-white shadow-sm'
                   : 'text-slate-400 hover:text-white hover:bg-[#162033]'
@@ -107,55 +107,55 @@ export const AnalyticsPage = () => {
       ) : (
         <>
           {/* Metrics Row */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="bg-[#111827] border border-[#1E293B] rounded-2xl p-5 shadow-sm">
-              <div className="flex items-center justify-between text-xs text-slate-400">
-                <span>Total Views</span>
-                <Eye className="w-4 h-4 text-blue-400" />
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+            <div className="bg-[#111827] border border-[#1E293B] rounded-2xl p-3.5 sm:p-5 shadow-sm">
+              <div className="flex items-center justify-between text-[11px] sm:text-xs text-slate-400">
+                <span className="truncate">Total Views</span>
+                <Eye className="w-4 h-4 text-blue-400 shrink-0" />
               </div>
-              <div className="text-2xl font-bold text-white mt-2">
+              <div className="text-xl sm:text-2xl font-bold text-white mt-1.5 sm:mt-2 truncate">
                 {stats.totalViews.toLocaleString()}
               </div>
-              <div className="text-[11px] text-emerald-400 mt-1 flex items-center gap-1 font-semibold">
-                <ArrowUpRight className="w-3.5 h-3.5" />
-                <span>+14.8% vs previous period</span>
+              <div className="text-[10px] sm:text-[11px] text-emerald-400 mt-1 flex items-center gap-1 font-semibold truncate">
+                <ArrowUpRight className="w-3.5 h-3.5 shrink-0" />
+                <span>+14.8%</span>
               </div>
             </div>
 
-            <div className="bg-[#111827] border border-[#1E293B] rounded-2xl p-5 shadow-sm">
-              <div className="flex items-center justify-between text-xs text-slate-400">
-                <span>Watch Time (Hours)</span>
-                <Clock className="w-4 h-4 text-indigo-400" />
+            <div className="bg-[#111827] border border-[#1E293B] rounded-2xl p-3.5 sm:p-5 shadow-sm">
+              <div className="flex items-center justify-between text-[11px] sm:text-xs text-slate-400">
+                <span className="truncate">Watch Time</span>
+                <Clock className="w-4 h-4 text-indigo-400 shrink-0" />
               </div>
-              <div className="text-2xl font-bold text-white mt-2">
+              <div className="text-xl sm:text-2xl font-bold text-white mt-1.5 sm:mt-2 truncate">
                 {estimatedHours} hrs
               </div>
-              <div className="text-[11px] text-emerald-400 mt-1 flex items-center gap-1 font-semibold">
-                <ArrowUpRight className="w-3.5 h-3.5" />
-                <span>+9.3% vs previous period</span>
+              <div className="text-[10px] sm:text-[11px] text-emerald-400 mt-1 flex items-center gap-1 font-semibold truncate">
+                <ArrowUpRight className="w-3.5 h-3.5 shrink-0" />
+                <span>+9.3%</span>
               </div>
             </div>
 
-            <div className="bg-[#111827] border border-[#1E293B] rounded-2xl p-5 shadow-sm">
-              <div className="flex items-center justify-between text-xs text-slate-400">
-                <span>Subscribers</span>
-                <Users className="w-4 h-4 text-purple-400" />
+            <div className="bg-[#111827] border border-[#1E293B] rounded-2xl p-3.5 sm:p-5 shadow-sm">
+              <div className="flex items-center justify-between text-[11px] sm:text-xs text-slate-400">
+                <span className="truncate">Subscribers</span>
+                <Users className="w-4 h-4 text-purple-400 shrink-0" />
               </div>
-              <div className="text-2xl font-bold text-white mt-2">
+              <div className="text-xl sm:text-2xl font-bold text-white mt-1.5 sm:mt-2 truncate">
                 {stats.totalSubscribers.toLocaleString()}
               </div>
-              <div className="text-[11px] text-emerald-400 mt-1 flex items-center gap-1 font-semibold">
-                <ArrowUpRight className="w-3.5 h-3.5" />
-                <span>+18.1% vs previous period</span>
+              <div className="text-[10px] sm:text-[11px] text-emerald-400 mt-1 flex items-center gap-1 font-semibold truncate">
+                <ArrowUpRight className="w-3.5 h-3.5 shrink-0" />
+                <span>+18.1%</span>
               </div>
             </div>
 
-            <div className="bg-[#111827] border border-[#1E293B] rounded-2xl p-5 shadow-sm">
-              <div className="flex items-center justify-between text-xs text-slate-400">
-                <span>Estimated Revenue</span>
-                <DollarSign className="w-4 h-4 text-amber-400" />
+            <div className="bg-[#111827] border border-[#1E293B] rounded-2xl p-3.5 sm:p-5 shadow-sm">
+              <div className="flex items-center justify-between text-[11px] sm:text-xs text-slate-400">
+                <span className="truncate">Revenue</span>
+                <DollarSign className="w-4 h-4 text-amber-400 shrink-0" />
               </div>
-              <div className="text-2xl font-bold text-white mt-2">
+              <div className="text-xl sm:text-2xl font-bold text-white mt-1.5 sm:mt-2 truncate">
                 $0.00
               </div>
               <div className="text-[11px] text-slate-500 mt-1">

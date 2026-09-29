@@ -183,8 +183,8 @@ export const SettingsPage = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        {/* Vertical Tab Navigation (Col span 1) */}
-        <div className="space-y-1">
+        {/* Tab Navigation */}
+        <div className="flex md:flex-col gap-1 overflow-x-auto pb-2 md:pb-0 max-w-full">
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = activeTab === item.id;
@@ -192,7 +192,7 @@ export const SettingsPage = () => {
               <button
                 key={item.id}
                 onClick={() => setActiveTab(item.id)}
-                className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs font-semibold text-left transition-all ${
+                className={`flex items-center gap-2.5 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl text-xs font-semibold whitespace-nowrap text-left transition-all shrink-0 md:shrink md:w-full ${
                   isActive
                     ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20'
                     : 'text-slate-400 hover:text-white hover:bg-[#162033]'
@@ -204,10 +204,10 @@ export const SettingsPage = () => {
             );
           })}
 
-          <div className="pt-4 border-t border-[#1E293B]">
+          <div className="pt-0 md:pt-4 border-l md:border-l-0 md:border-t border-[#1E293B] pl-1 md:pl-0 shrink-0 md:shrink">
             <button
               onClick={logout}
-              className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs font-semibold text-red-400 hover:bg-red-500/10 transition-colors"
+              className="flex items-center gap-2.5 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl text-xs font-semibold whitespace-nowrap text-red-400 hover:bg-red-500/10 transition-colors md:w-full"
             >
               <LogOut className="w-4 h-4 shrink-0" />
               <span>Log Out</span>
@@ -216,7 +216,7 @@ export const SettingsPage = () => {
         </div>
 
         {/* Tab Content Box (Col span 3) */}
-        <div className="md:col-span-3 bg-[#111827] border border-[#1E293B] rounded-2xl p-6 shadow-xl space-y-6">
+        <div className="md:col-span-3 bg-[#111827] border border-[#1E293B] rounded-2xl p-4 sm:p-6 shadow-xl space-y-6">
           {/* ============================================================== */}
           {/* 1. Account Details Tab                                         */}
           {/* ============================================================== */}

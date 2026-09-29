@@ -101,18 +101,18 @@ export const LikedVideosPage = () => {
           {likedVideos.map((video, idx) => (
             <div
               key={video.likeId}
-              className="flex items-center justify-between p-4 hover:bg-[#162033]/60 transition-colors group"
+              className="flex items-center justify-between p-3 sm:p-4 hover:bg-[#162033]/60 transition-colors group"
             >
               {/* Left Details */}
-              <div className="flex items-center gap-4 min-w-0">
-                <span className="text-xs font-bold text-slate-500 w-5 text-center shrink-0">
+              <div className="flex items-center gap-2.5 sm:gap-4 min-w-0">
+                <span className="text-xs font-bold text-slate-500 w-4 sm:w-5 text-center shrink-0 hidden sm:inline-block">
                   {idx + 1}
                 </span>
 
                 {/* Thumbnail */}
                 <Link
                   to={`/watch/${video._id}`}
-                  className="relative w-36 aspect-video rounded-xl overflow-hidden shrink-0 bg-[#0F172A] border border-[#1E293B]"
+                  className="relative w-24 sm:w-36 aspect-video rounded-lg sm:rounded-xl overflow-hidden shrink-0 bg-[#0F172A] border border-[#1E293B]"
                 >
                   <img
                     src={video.thumbnail}

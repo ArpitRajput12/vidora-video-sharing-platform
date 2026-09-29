@@ -71,7 +71,7 @@ export const EditVideoModal = ({ video, isOpen, onClose, onSuccess }) => {
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm animate-in fade-in duration-150">
       <div className="w-full max-w-lg bg-[#111827] border border-[#1E293B] rounded-2xl shadow-2xl overflow-hidden flex flex-col">
         {/* Header */}
-        <div className="px-6 py-4 border-b border-[#1E293B] flex items-center justify-between">
+        <div className="px-5 sm:px-6 py-3.5 sm:py-4 border-b border-[#1E293B] flex items-center justify-between">
           <h3 className="text-base font-bold text-white">Edit Video Details</h3>
           <button
             onClick={onClose}
@@ -82,13 +82,13 @@ export const EditVideoModal = ({ video, isOpen, onClose, onSuccess }) => {
         </div>
 
         {error && (
-          <div className="mx-6 mt-4 p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-xs text-red-400">
+          <div className="mx-4 sm:mx-6 mt-4 p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-xs text-red-400">
             {error}
           </div>
         )}
 
         {/* Form Body */}
-        <form onSubmit={handleSubmit} className="p-6 space-y-4">
+        <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-4">
           <div>
             <label className="block text-xs font-semibold text-slate-300 mb-1.5">
               Video Title <span className="text-red-400">*</span>
@@ -120,7 +120,7 @@ export const EditVideoModal = ({ video, isOpen, onClose, onSuccess }) => {
             <label className="block text-xs font-semibold text-slate-300 mb-1.5">
               Thumbnail
             </label>
-            <div className="flex items-center gap-4">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4">
               <div className="w-28 aspect-video rounded-xl bg-[#162033] border border-[#1E293B] overflow-hidden shrink-0">
                 {thumbnailPreview ? (
                   <img
@@ -134,7 +134,7 @@ export const EditVideoModal = ({ video, isOpen, onClose, onSuccess }) => {
                   </div>
                 )}
               </div>
-              <div className="flex-1">
+              <div className="flex-1 w-full">
                 <input
                   type="file"
                   accept="image/*"

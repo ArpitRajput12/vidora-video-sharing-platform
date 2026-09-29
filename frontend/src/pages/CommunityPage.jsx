@@ -165,10 +165,10 @@ export const CommunityPage = () => {
       {/* ============================================================== */}
       <div className="lg:col-span-2 space-y-6">
         {/* Header & Feed Switcher */}
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
-            <h1 className="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-              <MessageSquare className="w-6 h-6 text-purple-400" />
+            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white flex items-center gap-2">
+              <MessageSquare className="w-5 h-5 sm:w-6 sm:h-6 text-purple-400" />
               <span>Community Feed</span>
             </h1>
             <p className="text-xs text-slate-400 mt-0.5">
@@ -176,7 +176,7 @@ export const CommunityPage = () => {
             </p>
           </div>
 
-          <div className="flex items-center gap-1 p-1 rounded-xl bg-[#111827] border border-[#1E293B]">
+          <div className="flex items-center gap-1 p-1 rounded-xl bg-[#111827] border border-[#1E293B] self-start sm:self-auto">
             <button
               onClick={() => setActiveTab('forYou')}
               className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
@@ -367,13 +367,13 @@ export const CommunityPage = () => {
                   </div>
 
                   {/* Post Content */}
-                  <div className="text-xs text-slate-200 whitespace-pre-wrap leading-relaxed pl-13">
+                  <div className="text-xs text-slate-200 whitespace-pre-wrap leading-relaxed pl-0 sm:pl-12">
                     {tweet.content}
                   </div>
 
                   {/* Action Buttons Row */}
                   <div className="flex items-center justify-between pt-2 border-t border-[#1E293B] text-slate-400 text-xs">
-                    <div className="flex items-center gap-6">
+                    <div className="flex items-center gap-4 sm:gap-6">
                       <button
                         onClick={() => handleToggleLike(tweet._id)}
                         className={`flex items-center gap-1.5 transition-colors ${

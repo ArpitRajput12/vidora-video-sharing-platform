@@ -12,11 +12,11 @@ import {
   Settings,
   LogOut,
   PlaySquare,
-  Tv
+  X
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext.jsx';
 
-export const Sidebar = () => {
+export const Sidebar = ({ isOpen = false, onClose }) => {
   const { user, logout } = useAuth();
 
   const navLinks = [
@@ -31,21 +31,38 @@ export const Sidebar = () => {
     { label: 'Watch History', path: '/history', icon: History },
   ];
 
-  return (
-    <aside className="fixed left-0 top-0 bottom-0 w-64 bg-[#111827] border-r border-[#1E293B] flex flex-col z-40 select-none">
+  const handleLinkClick = () => {
+    if (onClose) onClose();
+  };
+
+  const sidebarContent = (
+    <>
       {/* Brand Header */}
-      <div className="h-16 px-6 flex items-center gap-3 border-b border-[#1E293B]">
-        <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-500/20">
-          <PlaySquare className="w-5 h-5 text-white" />
-        </div>
-        <div className="flex flex-col">
-          <span className="text-lg font-bold tracking-tight text-white flex items-center gap-1.5">
-            Vidora
-            <span className="text-[10px] uppercase font-semibold px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20">
-              Studio
+      <div className="h-16 px-6 flex items-center justify-between border-b border-[#1E293B]">
+        <div className="flex items-center gap-3">
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-500/20">
+            <PlaySquare className="w-5 h-5 text-white" />
+          </div>
+          <div className="flex flex-col">
+            <span className="text-lg font-bold tracking-tight text-white flex items-center gap-1.5">
+              Vidora
+              <span className="text-[10px] uppercase font-semibold px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20">
+                Studio
+              </span>
             </span>
-          </span>
+          </div>
         </div>
+
+        {/* Close button for mobile drawer */}
+        {onClose && (
+          <button
+            onClick={onClose}
+            className="lg:hidden p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-[#162033] transition-colors"
+            title="Close Menu"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        )}
       </div>
 
       {/* Navigation Menu */}
@@ -60,6 +77,7 @@ export const Sidebar = () => {
             <NavLink
               key={item.path}
               to={item.path}
+              onClick={handleLinkClick}
               className={({ isActive }) =>
                 `flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-sm font-medium transition-all duration-150 ${
                   isActive
@@ -80,6 +98,7 @@ export const Sidebar = () => {
 
         <NavLink
           to="/settings"
+          onClick={handleLinkClick}
           className={({ isActive }) =>
             `flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-sm font-medium transition-all duration-150 ${
               isActive
@@ -113,7 +132,10 @@ export const Sidebar = () => {
           </div>
 
           <button
-            onClick={logout}
+            onClick={() => {
+              if (onClose) onClose();
+              logout();
+            }}
             title="Log Out"
             className="p-1.5 rounded-lg text-slate-400 hover:text-red-400 hover:bg-red-500/10 transition-colors shrink-0"
           >
@@ -121,6 +143,32 @@ export const Sidebar = () => {
           </button>
         </div>
       </div>
-    </aside>
+    </>
+  );
+
+  return (
+    <>
+      {/* Permanent Fixed Sidebar for Large Viewports (>= 1024px) */}
+      <aside className="hidden lg:flex fixed left-0 top-0 bottom-0 w-64 bg-[#111827] border-r border-[#1E293B] flex-col z-30 select-none">
+        {sidebarContent}
+      </aside>
+
+      {/* Mobile & Tablet Slide-Over Drawer (< 1024px) */}
+      {isOpen && (
+        <div className="fixed inset-0 z-50 lg:hidden">
+          {/* Backdrop overlay */}
+          <div
+            className="fixed inset-0 bg-black/70 backdrop-blur-sm transition-opacity"
+            onClick={onClose}
+            aria-hidden="true"
+          />
+
+          {/* Drawer content */}
+          <aside className="fixed left-0 top-0 bottom-0 w-72 max-w-[85vw] bg-[#111827] border-r border-[#1E293B] flex flex-col z-50 shadow-2xl select-none animate-in slide-in-from-left duration-200">
+            {sidebarContent}
+          </aside>
+        </div>
+      )}
+    </>
   );
 };

@@ -255,7 +255,7 @@ export const UploadPage = () => {
           </div>
 
           {/* Video Metadata Inputs */}
-          <div className="bg-[#111827] border border-[#1E293B] rounded-2xl p-6 space-y-4">
+          <div className="bg-[#111827] border border-[#1E293B] rounded-2xl p-4 sm:p-6 space-y-4">
             <div>
               <label className="block text-xs font-bold text-slate-300 mb-1.5">
                 Video Title <span className="text-red-400">*</span>
@@ -289,7 +289,7 @@ export const UploadPage = () => {
 
           {/* Live Progress Bar Section */}
           {uploading && (
-            <div className="bg-[#111827] border border-blue-500/30 rounded-2xl p-5 space-y-2.5">
+            <div className="bg-[#111827] border border-blue-500/30 rounded-2xl p-4 sm:p-5 space-y-2.5">
               <div className="flex items-center justify-between text-xs">
                 <span className="font-semibold text-slate-200">
                   {isProcessing
@@ -317,12 +317,12 @@ export const UploadPage = () => {
           )}
 
           {/* Submit Action */}
-          <div className="flex justify-end gap-3 pt-2">
+          <div className="flex flex-col-reverse sm:flex-row justify-end gap-3 pt-2">
             <button
               type="button"
               disabled={uploading}
               onClick={() => navigate('/studio')}
-              className="px-5 py-2.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-white transition-colors"
+              className="w-full sm:w-auto px-5 py-2.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-white transition-colors text-center"
             >
               Cancel
             </button>
@@ -330,7 +330,7 @@ export const UploadPage = () => {
             <button
               type="submit"
               disabled={uploading || !videoFile || !thumbnailFile || !title.trim()}
-              className="px-6 py-2.5 rounded-xl text-xs font-semibold text-white bg-blue-600 hover:bg-blue-500 active:bg-blue-700 disabled:opacity-50 transition-all shadow-lg shadow-blue-600/20 flex items-center gap-2"
+              className="w-full sm:w-auto px-6 py-2.5 rounded-xl text-xs font-semibold text-white bg-blue-600 hover:bg-blue-500 active:bg-blue-700 disabled:opacity-50 transition-all shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2"
             >
               {uploading ? (
                 <>

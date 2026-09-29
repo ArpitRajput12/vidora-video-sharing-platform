@@ -135,7 +135,7 @@ export const MyVideosPage = () => {
       <div className="bg-[#111827] border border-[#1E293B] rounded-2xl p-4 space-y-4">
         <div className="flex flex-wrap items-center justify-between gap-3">
           {/* Status Filter Tabs */}
-          <div className="flex items-center gap-1 p-1 rounded-xl bg-[#162033] border border-[#1E293B]">
+          <div className="flex items-center gap-1 p-1 rounded-xl bg-[#162033] border border-[#1E293B] overflow-x-auto max-w-full">
             {[
               { id: 'all', label: 'All Videos' },
               { id: 'published', label: 'Published' },
@@ -145,7 +145,7 @@ export const MyVideosPage = () => {
               <button
                 key={tab.id}
                 onClick={() => setStatusFilter(tab.id)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${
                   statusFilter === tab.id
                     ? 'bg-blue-600 text-white shadow-sm'
                     : 'text-slate-400 hover:text-slate-200 hover:bg-[#1E293B]'
@@ -180,7 +180,7 @@ export const MyVideosPage = () => {
         </div>
 
         {/* Search Input & Sort Dropdown */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2 border-t border-[#1E293B]">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-2 border-t border-[#1E293B]">
           <div className="w-full sm:max-w-xs relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400 pointer-events-none" />
             <input
@@ -192,12 +192,12 @@ export const MyVideosPage = () => {
             />
           </div>
 
-          <div className="w-full sm:w-auto flex items-center justify-end gap-2 text-xs">
+          <div className="w-full sm:w-auto flex items-center justify-between sm:justify-end gap-2 text-xs">
             <span className="text-slate-400 font-medium whitespace-nowrap">Sort by:</span>
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="bg-[#162033] border border-[#1E293B] text-slate-200 text-xs rounded-xl px-3 py-2 focus:outline-none focus:border-blue-500 cursor-pointer"
+              className="bg-[#162033] border border-[#1E293B] text-slate-200 text-xs rounded-xl px-3 py-2 focus:outline-none focus:border-blue-500 cursor-pointer flex-1 sm:flex-initial"
             >
               <option value="latest">Latest First</option>
               <option value="oldest">Oldest First</option>

@@ -67,13 +67,13 @@ export const RegisterPage = () => {
 
   return (
     <div className="min-h-screen bg-[#0F172A] flex items-center justify-center p-4">
-      <div className="w-full max-w-md bg-[#111827] border border-[#1E293B] rounded-2xl p-8 shadow-2xl">
+      <div className="w-full max-w-md bg-[#111827] border border-[#1E293B] rounded-2xl p-5 sm:p-8 shadow-2xl">
         <div className="flex flex-col items-center text-center mb-6">
           <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-500/25 mb-3">
             <PlaySquare className="w-6 h-6 text-white" />
           </div>
-          <h1 className="text-2xl font-bold tracking-tight text-white">Create Vidora Channel</h1>
-          <p className="text-sm text-slate-400 mt-1">Start broadcasting and uploading videos</p>
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white">Create Vidora Channel</h1>
+          <p className="text-xs sm:text-sm text-slate-400 mt-1">Start broadcasting and uploading videos</p>
         </div>
 
         {error && (
@@ -144,7 +144,7 @@ export const RegisterPage = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-3 pt-1">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
             <div>
               <label className="block text-xs font-medium text-slate-300 mb-1">
                 Avatar <span className="text-red-400">*</span>

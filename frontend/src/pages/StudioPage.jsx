@@ -172,23 +172,23 @@ export const StudioPage = () => {
       {/* ============================================================== */}
       <div className="relative bg-[#111827] border border-[#1E293B] rounded-2xl overflow-hidden shadow-xl">
         {/* Subtle decorative cover banner */}
-        <div className="h-28 w-full bg-gradient-to-r from-blue-900/40 via-indigo-900/30 to-purple-900/40 border-b border-[#1E293B] relative overflow-hidden">
+        <div className="h-24 sm:h-28 w-full bg-gradient-to-r from-blue-900/40 via-indigo-900/30 to-purple-900/40 border-b border-[#1E293B] relative overflow-hidden">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-500/10 via-transparent to-transparent"></div>
         </div>
 
-        <div className="px-6 pb-6 pt-0 flex flex-col md:flex-row items-start md:items-end justify-between gap-4 -mt-10">
-          <div className="flex items-end gap-4">
+        <div className="px-4 sm:px-6 pb-5 sm:pb-6 pt-0 flex flex-col md:flex-row items-start md:items-end justify-between gap-4 -mt-8 sm:-mt-10">
+          <div className="flex items-end gap-3 sm:gap-4">
             <img
               src={
                 user?.avatar ||
                 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80'
               }
               alt={user?.fullName || 'Creator'}
-              className="w-20 h-20 rounded-2xl object-cover ring-4 ring-[#111827] shadow-xl shrink-0"
+              className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl sm:rounded-2xl object-cover ring-4 ring-[#111827] shadow-xl shrink-0"
             />
             <div className="mb-1">
-              <div className="flex items-center gap-2">
-                <h1 className="text-xl font-bold tracking-tight text-white">
+              <div className="flex items-center gap-2 flex-wrap">
+                <h1 className="text-lg sm:text-xl font-bold tracking-tight text-white">
                   {user?.fullName || 'Channel Studio'}
                 </h1>
                 <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-blue-500/10 text-blue-400 border border-blue-500/20">
@@ -204,16 +204,16 @@ export const StudioPage = () => {
             </div>
           </div>
 
-          <div className="flex items-center gap-2.5 mb-1">
+          <div className="flex items-center gap-2.5 mb-1 w-full sm:w-auto">
             <button
               onClick={() => navigate('/settings')}
-              className="px-4 py-2 rounded-xl text-xs font-semibold bg-[#162033] hover:bg-[#1E293B] text-slate-200 border border-[#1E293B] transition-all"
+              className="flex-1 sm:flex-initial px-4 py-2 rounded-xl text-xs font-semibold bg-[#162033] hover:bg-[#1E293B] text-slate-200 border border-[#1E293B] transition-all text-center"
             >
               Edit Channel
             </button>
             <button
               onClick={() => navigate('/upload')}
-              className="px-4 py-2 rounded-xl text-xs font-semibold bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-600/20 transition-all flex items-center gap-1.5"
+              className="flex-1 sm:flex-initial px-4 py-2 rounded-xl text-xs font-semibold bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-600/20 transition-all flex items-center justify-center gap-1.5"
             >
               <Plus className="w-4 h-4" />
               <span>Upload Video</span>
@@ -225,72 +225,72 @@ export const StudioPage = () => {
       {/* ============================================================== */}
       {/* 2. Four Analytics Stat Cards (Subscribers, Views, Likes, Hours)*/}
       {/* ============================================================== */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         {/* Subscribers Card */}
-        <div className="bg-[#111827] border border-[#1E293B] rounded-2xl p-5 hover:border-slate-700/80 transition-all shadow-sm">
+        <div className="bg-[#111827] border border-[#1E293B] rounded-2xl p-3.5 sm:p-5 hover:border-slate-700/80 transition-all shadow-sm">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-slate-400">Total Subscribers</span>
-            <div className="w-8 h-8 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400">
-              <Users className="w-4 h-4" />
+            <span className="text-[11px] sm:text-xs font-medium text-slate-400 truncate">Total Subscribers</span>
+            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 shrink-0">
+              <Users className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </div>
           </div>
-          <div className="text-2xl font-bold text-white mt-2.5 tracking-tight">
+          <div className="text-xl sm:text-2xl font-bold text-white mt-2 sm:mt-2.5 tracking-tight truncate">
             {loading ? '--' : stats.totalSubscribers.toLocaleString()}
           </div>
-          <div className="flex items-center gap-1.5 text-[11px] text-emerald-400 mt-1.5">
+          <div className="flex items-center gap-1 sm:gap-1.5 text-[10px] sm:text-[11px] text-emerald-400 mt-1 sm:mt-1.5">
             <span className="font-semibold">+12.4%</span>
-            <span className="text-slate-500">vs last month</span>
+            <span className="text-slate-500 hidden sm:inline">vs last month</span>
           </div>
         </div>
 
         {/* Total Views Card */}
-        <div className="bg-[#111827] border border-[#1E293B] rounded-2xl p-5 hover:border-slate-700/80 transition-all shadow-sm">
+        <div className="bg-[#111827] border border-[#1E293B] rounded-2xl p-3.5 sm:p-5 hover:border-slate-700/80 transition-all shadow-sm">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-slate-400">Total Views</span>
-            <div className="w-8 h-8 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400">
-              <Eye className="w-4 h-4" />
+            <span className="text-[11px] sm:text-xs font-medium text-slate-400 truncate">Total Views</span>
+            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 shrink-0">
+              <Eye className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </div>
           </div>
-          <div className="text-2xl font-bold text-white mt-2.5 tracking-tight">
+          <div className="text-xl sm:text-2xl font-bold text-white mt-2 sm:mt-2.5 tracking-tight truncate">
             {loading ? '--' : stats.totalViews.toLocaleString()}
           </div>
-          <div className="flex items-center gap-1.5 text-[11px] text-emerald-400 mt-1.5">
+          <div className="flex items-center gap-1 sm:gap-1.5 text-[10px] sm:text-[11px] text-emerald-400 mt-1 sm:mt-1.5">
             <span className="font-semibold">+8.2%</span>
-            <span className="text-slate-500">vs last month</span>
+            <span className="text-slate-500 hidden sm:inline">vs last month</span>
           </div>
         </div>
 
         {/* Total Likes Card */}
-        <div className="bg-[#111827] border border-[#1E293B] rounded-2xl p-5 hover:border-slate-700/80 transition-all shadow-sm">
+        <div className="bg-[#111827] border border-[#1E293B] rounded-2xl p-3.5 sm:p-5 hover:border-slate-700/80 transition-all shadow-sm">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-slate-400">Total Likes</span>
-            <div className="w-8 h-8 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400">
-              <ThumbsUp className="w-4 h-4" />
+            <span className="text-[11px] sm:text-xs font-medium text-slate-400 truncate">Total Likes</span>
+            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 shrink-0">
+              <ThumbsUp className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </div>
           </div>
-          <div className="text-2xl font-bold text-white mt-2.5 tracking-tight">
+          <div className="text-xl sm:text-2xl font-bold text-white mt-2 sm:mt-2.5 tracking-tight truncate">
             {loading ? '--' : stats.totalLikes.toLocaleString()}
           </div>
-          <div className="flex items-center gap-1.5 text-[11px] text-emerald-400 mt-1.5">
+          <div className="flex items-center gap-1 sm:gap-1.5 text-[10px] sm:text-[11px] text-emerald-400 mt-1 sm:mt-1.5">
             <span className="font-semibold">+5.1%</span>
-            <span className="text-slate-500">vs last month</span>
+            <span className="text-slate-500 hidden sm:inline">vs last month</span>
           </div>
         </div>
 
         {/* Watch Time Card */}
-        <div className="bg-[#111827] border border-[#1E293B] rounded-2xl p-5 hover:border-slate-700/80 transition-all shadow-sm">
+        <div className="bg-[#111827] border border-[#1E293B] rounded-2xl p-3.5 sm:p-5 hover:border-slate-700/80 transition-all shadow-sm">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-slate-400">Watch Time (Hours)</span>
-            <div className="w-8 h-8 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400">
-              <Clock className="w-4 h-4" />
+            <span className="text-[11px] sm:text-xs font-medium text-slate-400 truncate">Watch Time</span>
+            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 shrink-0">
+              <Clock className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </div>
           </div>
-          <div className="text-2xl font-bold text-white mt-2.5 tracking-tight">
+          <div className="text-xl sm:text-2xl font-bold text-white mt-2 sm:mt-2.5 tracking-tight truncate">
             {loading ? '--' : `${estimatedWatchHours} hrs`}
           </div>
-          <div className="flex items-center gap-1.5 text-[11px] text-emerald-400 mt-1.5">
+          <div className="flex items-center gap-1 sm:gap-1.5 text-[10px] sm:text-[11px] text-emerald-400 mt-1 sm:mt-1.5">
             <span className="font-semibold">+14.0%</span>
-            <span className="text-slate-500">vs last month</span>
+            <span className="text-slate-500 hidden sm:inline">vs last month</span>
           </div>
         </div>
       </div>
@@ -446,8 +446,8 @@ export const StudioPage = () => {
             />
           </div>
 
-          <div className="flex items-center justify-between pt-1">
-            <div className="flex items-center gap-2 pl-12 text-slate-400 text-xs">
+          <div className="flex flex-wrap items-center justify-between gap-2 pt-1">
+            <div className="flex items-center gap-2 pl-0 sm:pl-12 text-slate-400 text-xs">
               <button
                 type="button"
                 onClick={() => navigate('/community')}
@@ -456,13 +456,13 @@ export const StudioPage = () => {
               >
                 <ImageIcon className="w-4 h-4 text-blue-400" />
               </button>
-              <span className="text-[11px] text-slate-500">Supports text & announcements</span>
+              <span className="text-[11px] text-slate-500 hidden sm:inline">Supports text & announcements</span>
             </div>
 
             <button
               type="submit"
               disabled={postingTweet || !tweetContent.trim()}
-              className="px-4 py-1.5 rounded-xl text-xs font-semibold text-white bg-blue-600 hover:bg-blue-500 active:bg-blue-700 disabled:opacity-50 transition-all shadow-md shadow-blue-600/20 flex items-center gap-1.5"
+              className="ml-auto px-4 py-1.5 rounded-xl text-xs font-semibold text-white bg-blue-600 hover:bg-blue-500 active:bg-blue-700 disabled:opacity-50 transition-all shadow-md shadow-blue-600/20 flex items-center gap-1.5"
             >
               {postingTweet ? (
                 <Loader2 className="w-3.5 h-3.5 animate-spin" />

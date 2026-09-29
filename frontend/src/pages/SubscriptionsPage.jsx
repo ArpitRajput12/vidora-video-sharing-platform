@@ -83,7 +83,7 @@ export const SubscriptionsPage = () => {
       </div>
 
       {/* Filter Chips Bar */}
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 overflow-x-auto pb-1 max-w-full">
         {[
           { id: 'all', label: 'All Channels' },
           { id: 'channels', label: 'Verified Creators' },
@@ -92,7 +92,7 @@ export const SubscriptionsPage = () => {
           <button
             key={tab.id}
             onClick={() => setFilter(tab.id)}
-            className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
+            className={`px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
               filter === tab.id
                 ? 'bg-blue-600 text-white shadow-md shadow-blue-600/20 ring-1 ring-blue-500'
                 : 'bg-[#162033] text-slate-300 hover:text-white hover:bg-[#1E293B] border border-[#1E293B]'
